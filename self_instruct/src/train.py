@@ -119,7 +119,8 @@ def train(
         config = json.load(r)
 
     device_map = "auto"
-    world_size = int(os.environ.get("WORLD_SIZE", 1))
+    world_size = torch.cuda.device_count()
+    print(world_size)
     ddp = world_size != 1
     if ddp:
         device_map = {"": int(os.environ.get("LOCAL_RANK") or 0)}
